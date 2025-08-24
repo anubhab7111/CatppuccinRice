@@ -12,7 +12,7 @@ $git_branch\
     $rust\
     $java\
 )
-[→ ](fg:arrow)
+$character
 """
 # Add the modules you need
 
@@ -68,14 +68,20 @@ SUSE = " "
 Ubuntu = " "
 Windows = " "
 
+# [character]
+# success_symbol = "[󰍟](fg:arrow)"
+# error_symbol = "[󰍟](fg:red)"
 [character]
-success_symbol = "[󰍟](fg:arrow)"
-error_symbol = "[󰍟](fg:red)"
+success_symbol = "[🞈](#a6e3a1 bold)"
+error_symbol = "[🞈](#f38ba8)"
+vicmd_symbol = "[🞈](#f9e2af)"
 
 [directory]
-format = "[$path](bold $style)[$read_only]($read_only_style) "
+# format = "[$path](bold $style)[$read_only]($read_only_style) "
+format = "[]($style)[(bg:#89b4fa fg:#49628a)$path](bg:#89b4fa fg:#49628a)[ ]($style)"
 truncation_length = 2
-style = "fg:directory"
+# style = "fg:directory"
+style = "fg:#89b4fa"
 read_only_style = "fg:directory"
 before_repo_root_style = "fg:directory"
 truncation_symbol = "…/"

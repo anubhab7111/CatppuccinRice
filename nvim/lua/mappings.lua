@@ -1,32 +1,29 @@
 require "nvchad.mappings"
 
--- add yours here
+-- Select entire buffer
+vim.keymap.set("n", "<leader>a", "ggVG")
 
-local map = vim.keymap.set
+-- Better buffer navigation
+-- vim.keymap.set("n", "<leader>bd", ":w<CR>:%bd<CR>")
+vim.keymap.set("n", "<leader>bd", function()
+  vim.cmd "w"
+  vim.cmd "%bd"
+  vim.cmd "NvimTreeOpen"
+end)
 
-map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>")
-
--- betterTerm
-local betterTerm = require "betterTerm"
--- toggle firts term
-vim.keymap.set({ "n", "t" }, "<C-;>", betterTerm.open, { desc = "Open terminal" })
--- Select term focus
-vim.keymap.set({ "n" }, "<leader>tt", betterTerm.select, { desc = "Select terminal" })
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
-
+-- Code Runner
 vim.keymap.set("n", "<leader>rr", ":RunCode<CR>", { noremap = true, silent = false })
-vim.keymap.set("n", "<leader>rf", ":RunFile<CR>", { noremap = true, silent = false })
-vim.keymap.set("n", "<leader>rft", ":RunFile tab<CR>", { noremap = true, silent = false })
-vim.keymap.set("n", "<leader>rp", ":RunProject<CR>", { noremap = true, silent = false })
-vim.keymap.set("n", "<leader>rc", ":RunClose<CR>", { noremap = true, silent = false })
-vim.keymap.set("n", "<leader>crf", ":CRFiletype<CR>", { noremap = true, silent = false })
-vim.keymap.set("n", "<leader>crp", ":CRProjects<CR>", { noremap = true, silent = false })
+-- vim.keymap.set("n", "<leader>rf", ":RunFile<CR>", { noremap = true, silent = false })
+-- vim.keymap.set("n", "<leader>rft", ":RunFile tab<CR>", { noremap = true, silent = false })
+-- vim.keymap.set("n", "<leader>rp", ":RunProject<CR>", { noremap = true, silent = false })
+-- vim.keymap.set("n", "<leader>rc", ":RunClose<CR>", { noremap = true, silent = false })
+-- vim.keymap.set("n", "<leader>crf", ":CRFiletype<CR>", { noremap = true, silent = false })
+-- vim.keymap.set("n", "<leader>crp", ":CRProjects<CR>", { noremap = true, silent = false })
 
---  ▗▄▄▖▗▄▄▖
--- ▐▌   ▐▌ ▐▌
--- ▐▌   ▐▛▀▘
--- ▝▚▄▄▖▐▌
+--  ▗▄▄▖▗▄▄▖  --
+-- ▐▌   ▐▌ ▐▌ --
+-- ▐▌   ▐▛▀▘  --
+-- ▝▚▄▄▖▐▌    --
 
 -- Quick compile and run (C++)
 -- Show output in terminal
@@ -43,6 +40,7 @@ vim.keymap.set(
 )
 
 local function setup_problem(name)
+  local original_dir = vim.fn.getcwd()
   local dir = name or vim.fn.input "Problem name: "
   if dir == "" then
     return
@@ -56,6 +54,7 @@ local function setup_problem(name)
   vim.cmd("!touch " .. dir .. "/expected.txt")
   vim.cmd("cd " .. dir)
   vim.cmd("edit " .. dir .. ".cpp")
+  vim.cmd("cd " .. original_dir)
 end
 
 vim.keymap.set("n", "<leader>np", function()
@@ -76,7 +75,7 @@ local function contest_layout()
   -- vim.cmd "tabnew"
   vim.cmd("edit " .. current_file)
   vim.cmd("vsplit " .. current_dir .. "/input.txt")
-  vim.cmd "vertical resize 30"
+  vim.cmd "vertical resize 50"
   vim.cmd("split " .. current_dir .. "/output.txt")
   vim.cmd("split " .. current_dir .. "/expected.txt")
   vim.cmd "wincmd h" -- Go back to the cpp file
@@ -93,7 +92,7 @@ function ResizeContestLayout()
 
   -- Move right to input.txt
   vim.cmd "wincmd l"
-  vim.cmd "vertical resize 20"
+  vim.cmd "vertical resize 50"
 
   -- Stack output.txt below input.txt
   vim.cmd "wincmd j"
@@ -107,3 +106,27 @@ function ResizeContestLayout()
 end
 
 vim.api.nvim_set_keymap("n", "<leader>rs", ":lua ResizeContestLayout()<CR>", { noremap = true, silent = true })
+
+local function contest_layout_io_horizontal()
+  local current_file = vim.fn.expand "%:p"
+  local current_dir = vim.fn.expand "%:p:h"
+
+  if vim.fn.expand "%:e" ~= "cpp" then
+    print "Please open a .cpp file first"
+    return
+  end
+
+  vim.cmd("edit " .. current_file)
+  vim.cmd("horizontal split " .. current_dir .. "/input.txt")
+  vim.cmd "horizontal resize 5"
+  vim.cmd("vsplit " .. current_dir .. "/output.txt")
+  vim.cmd "wincmd h"
+end
+
+-- Map the new layout function to <leader>rh
+vim.keymap.set(
+  "n",
+  "<leader>rh",
+  contest_layout_io_horizontal,
+  { desc = "Contest Layout (cpp, input, output stacked horizontally)" }
+)

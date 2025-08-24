@@ -1,16 +1,20 @@
-width=800
-height=432
+# ~/.config/wofi/config
+
+width=40%
+height=35%
 location=center
-show=drun
-prompt=Search...
-filter_rate=100
-allow_markup=true
-no_actions=true
-halign=fill
 orientation=vertical
-content_halign=fill
+show=drun
+prompt=Search
+term=alacritty
+filter_rate=100
+matching=fuzzy
 insensitive=true
+allow_markup=true
 allow_images=true
-image_size=28
-gtk_dark=false
-term=kitty
+image_size=32
+no_actions=true
+gtk_dark=true
+# cache_file=/dev/null
+# drun-sort_order=alphabetical
+drun-show_actions=true
