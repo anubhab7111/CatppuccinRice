@@ -121,3 +121,17 @@ autocmd("LspAttach", {
     -- Add more LSP keybinds as needed
   end,
 })
+
+-- Auto-format on save in python(isort)
+-- autocmd("BufWritePre", {
+--   pattern = "*.py",
+--   callback = function()
+--     vim.lsp.buf.format { async = false }
+--   end,
+-- })
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.py",
+  callback = function(args)
+    require("conform").format { bufnr = args.buf, async = false }
+  end,
+})

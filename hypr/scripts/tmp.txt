@@ -282,4 +282,3 @@ trap 'log "Script terminated"; exit 0' SIGTERM SIGINT
 # Run main function
 main
 
-

@@ -39,7 +39,25 @@ require("lspconfig").clangd.setup {
     client.server_capabilities.documentRangeFormattingProvider = false
   end,
 }
+require("lspconfig").basedpyright.setup {
+  settings = {
+    basedpyright = {
+      analysis = {
+        typeCheckingMode = "basic", -- or "strict"
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+      },
+    },
+  },
+}
 
+require("lspconfig").emmet_ls.setup {
+  filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
+}
+
+require("lspconfig").jsonls.setup {}
+require("lspconfig").tailwindcss.setup {}
+require("lspconfig").eslint.setup {}
 -- Don't include clangd in servers list since we handle it manually
-local servers = { "html", "cssls", "basedpyright", "tsserver" }
+local servers = { "html", "cssls", "tsserver", "emmet_ls", "jsonls", "typescript-language-server" }
 vim.lsp.enable(servers)
