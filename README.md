@@ -1,4 +1,5 @@
-Arch rice based on Catppuccin-mocha theme using hyprland as window manager
+hyprland based Arch rice
+Enjoy :)
 
 # 🖼 Preview
 <img width="1000" src="images/Desktop.png">
