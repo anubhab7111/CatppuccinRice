@@ -1,24 +1,35 @@
-/* ~/.config/wofi/style.css - Inspired by hyprlock.conf UI */
-
 /* --- GLOBAL STYLES --- */
 * {
-  transition: 0.2s ease-in-out; /* Smooth transitions for elements */
+  transition:
+    background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  /* transform 0.15s cubic-bezier(0.4, 0, 0.2, 1); */
 }
 
-/* Base font and window styling - matches hyprlock background & general color scheme */
+/* Base window styling with improved backdrop */
 window {
-  font-family: "JetbrainsMono Nerd Font", monospace; /* Consistent font */
-  font-size: 18px; /* Base font size */
-  background-color: rgba(
-    30,
-    30,
-    46,
-    0.95
-  ); /* Catppuccin Mocha Base with slight transparency */
-  border: 4.5px solid #cba6f7; /* Catppuccin Lavender for border, matching hyprlock's primary accent */
-  border-radius: 24px; /* Consistent rounded corners */
-  margin: 0px; /* Ensure no external margin */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Deeper shadow than previous for more prominence */
+  font-family: "JetbrainsMono Nerd Font", monospace;
+  font-size: 18px;
+  background-color: rgba(30, 30, 46, 0.98);
+  border: 3px solid #cba6f7;
+  border-radius: 24px;
+  margin: 0px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(203, 166, 247, 0.1) inset;
+  animation: fadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    /* transform: scale(0.96); */
+  }
+  to {
+    opacity: 1;
+    /* transform: scale(1); */
+  }
 }
 
 /* --- BOXES & CONTAINERS --- */
@@ -26,126 +37,152 @@ window {
   margin: 0px;
   padding: 0px;
   border: none;
-  border-radius: 18px;
+  border-radius: 21px;
 }
 
 #inner-box {
-  margin: 20px; /* Margin around the list of entries */
-  margin-top: 0px; /* No top margin, keeps entries closer to input */
+  margin: 20px;
+  margin-top: 0px;
   border: none;
   border-radius: 16px;
-}
-
-#inner-box * {
-  transition: none; /* Disable transitions for content within the inner-box to avoid stutter during filtering/scrolling */
 }
 
 #scroll {
-  margin-top: 5px; /* Space between input field area and scrollable results */
-  margin-bottom: 5px; /* Space at the bottom of the scroll area */
+  margin-top: 8px;
+  margin-bottom: 8px;
   border: none;
   border-radius: 16px;
 }
 
-/* --- INPUT FIELD - Inspired by hyprlock's input-field --- */
+/* --- INPUT FIELD --- */
 #input {
-  background-color: #45475a;
+  background: linear-gradient(
+    135deg,
+    rgba(69, 71, 90, 0.9) 0%,
+    rgba(69, 71, 90, 1) 100%
+  );
   color: #cdd6f4;
-  border: 5px solid #94e2d5;
-  outline: none; /* Remove default GTK outline */
-  border-radius: 30px; /* Consistent rounded corners */
-  padding: 10px 20px; /* Good internal padding for input text */
-  margin: 20px; /* Margin around the input field */
-  font-weight: bold;
-  font-size: 18px; /* Consistent font size */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Mimics hyprlock's label shadow on placeholder */
+  border: 2.5px solid #94e2d5;
+  outline: none;
+  border-radius: 16px;
+  padding: 14px 24px;
+  margin: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(148, 226, 213, 0.1) inset;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* For the placeholder text, which Wofi displays as #input #text */
+#input:focus {
+  border-color: #89dceb;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(137, 220, 235, 0.2) inset,
+    0 0 20px rgba(137, 220, 235, 0.15);
+  /* transform: translateY(-1px); */
+}
+
 #input #text {
-  color: #cdd6f4; /* Catppuccin Mocha Text for actual input */
+  color: #cdd6f4;
   background: transparent;
   margin: 0px;
   padding: 0px;
   border: none;
-  /* This rule covers the 'placeholder_text' as well */
-  /* Italic for placeholder as in hyprlock, but Wofi might need Pango markup in config for this */
-  /* font-style: italic; */ /* This might not apply directly to placeholder in Wofi's CSS */
 }
 
 #input image {
-  color: #cdd6f4; /* Catppuccin Mocha Text for icon in input field */
-  margin-right: 10px; /* Space between icon and text in input */
+  color: #94e2d5;
+  margin-right: 12px;
 }
 
-/* --- ENTRY ITEMS (RESULTS) --- */
+/* --- ENTRY ITEMS --- */
 #entry {
-  background-color: transparent; /* Default transparent background */
+  background-color: transparent;
   border: none;
-  border-radius: 10px; /* Slightly smaller border-radius for entries for visual hierarchy */
-  margin: 2px 0px; /* Small vertical margin between entries */
-  padding: 8px 10px; /* Padding inside each entry */
-  min-height: 32px; /* Consistent height for entries */
-  font-weight: bold;
+  border-radius: 12px;
+  margin: 3px 8px;
+  padding: 10px 16px;
+  min-height: 40px;
+  font-weight: 500;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hover state for entries - inspired by hyprlock's accent for interactive elements */
 #entry:hover {
-  background-color: rgba(
-    137,
-    180,
-    250,
-    0.15
-  ); /* Catppuccin Lavender with transparency on hover */
-  /* Add a subtle shadow on hover, similar to hyprlock's elements */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgba(137, 180, 250, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  /* transform: translateX(4px); */
 }
 
 #entry:selected {
   outline: none;
-  margin: 0px;
-  padding: 10px 10px;
-  border-radius: 30px; /* Slightly reduce border-radius for entry vs. window for hierarchy. Aim for consistency with Waybar modules. */
+  margin: 3px 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
   background: linear-gradient(90deg, #fab387 0%, #cba6f7 100%);
+  box-shadow:
+    0 4px 16px rgba(203, 166, 247, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  /* transform: translateX(6px) scale(1.02); */
 }
 
-/* --- TEXT & IMAGES WITHIN ENTRIES --- */
+/* --- TEXT & IMAGES --- */
 #text {
-  color: #cdd6f4; /* Catppuccin Mocha Text for unselected items (hyprlock's $text) */
+  color: #cdd6f4;
   background: transparent;
-  margin-left: 12px; /* Consistent spacing between icon and text */
+  margin-left: 12px;
   padding: 0px;
   border: none;
-  /* Text shadow to mimic hyprlock's label shadows */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  transition: color 0.15s ease;
 }
 
 #text:selected {
-  color: #313244; /* Catppuccin Mocha Crust for selected text - provides good contrast on the gradient */
-  font-weight: bold; /* Keep bold for selected text */
-  /* Text shadow for selected text as well, potentially with slightly different color/blur */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  color: #1e1e2e;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 #img {
-  margin-right: 12px; /* Consistent spacing between icon and text */
-  background: transparent; /* Ensure icon background is transparent */
+  margin-right: 12px;
+  background: transparent;
+  /* transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1); */
 }
 
-/* --- SCROLLBAR (Optional) --- */
-/* Style the scrollbar to match the theme if you keep it visible */
+/* --- SCROLLBAR --- */
 scrollbar {
-  background-color: rgba(30, 30, 46, 0); /* Transparent scrollbar track */
-  border-radius: 5px;
+  background-color: transparent;
+  border-radius: 8px;
+  margin: 4px;
 }
 
 scrollbar slider {
-  background-color: rgba(
-    137,
-    180,
-    250,
-    0.5
-  ); /* Catppuccin Lavender with transparency */
-  border-radius: 5px;
+  background: linear-gradient(
+    180deg,
+    rgba(137, 180, 250, 0.4) 0%,
+    rgba(137, 180, 250, 0.6) 100%
+  );
+  border-radius: 8px;
+  min-width: 6px;
+  border: 1px solid rgba(137, 180, 250, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+scrollbar slider:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(137, 180, 250, 0.6) 0%,
+    rgba(137, 180, 250, 0.8) 100%
+  );
   min-width: 8px;
+}
+
+/* --- PERFORMANCE OPTIMIZATIONS --- */
+#inner-box * {
+  /* Re-enable selective transitions for smoother experience */
+  transition: background-color 0.12s ease;
+  /* transform 0.12s ease; */
 }

@@ -1,200 +1,158 @@
-@import "mocha.css";
-
+/* ================================
+   GLOBAL STYLES & TRANSITIONS
+   ================================ */
 * {
-  padding: 0;
-  margin: 0;
-  font-family: "Overpass", "JetBrains Mono Nerd Font";
-  font-size: 12px;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 15px; /* Increased slightly for better legibility */
+  font-weight: 600;
+  border: none;
+  border-radius: 14px; /* Balanced radius */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ------ Set a Uniform Border Radius ------ */
-.modules-left, .modules-center, .modules-right, #cpu, #memory, #temperature, #pulseaudio, #backlight, #custom-spotify, #custom-icon, #custom-updates, #network, #battery, #tray, #idle_inhibitor, #custom-power, #custom-notification {
-  border-radius: 18px;
-}
-
-/* ------ Modules Left ------ */
-.modules-left {
-  background-color: @base;
-  padding-right: 5px;
-  padding-left: 13px;
-}
-
-/* ------ Modules Center ------ */
-.modules-center {
-  background-color: @base;
-  padding-right: 5px;
-  padding-left: 5px;
-}
-
-/* ------ Modules Right ------ */
-.modules-right {
-  background-color: @base;
-  padding-right: 5px;
-  padding-left: 5px;
-}
-
-/* ------ Cpu Usage, Temperature, and Memory ------ */
-#cpu, #temperature, #memory {
-  background-color: @surface1;
-  padding: 2px 5px;
-  margin: 4px 2px;
-}
-
-#cpu { color: @peach; }
-#memory { color: @mauve; }
-#temperature { color: @maroon; }
-
-/* ------ Window Title ------ */
-#window { 
-    color: @text; 
-    padding-right: 4px;
-}
-
+/* ================================
+   MAIN WAYBAR WINDOW
+   ================================ */
 window#waybar {
-    background-color: rgba(0, 0, 0, 0);
-    border-bottom: 0px solid #ffffff;
-    /* color: #FFFFFF; */
-    background: transparent;
-    transition-property: background-color;
-    transition-duration: .5s;
+  background: rgba(0, 0, 0, 0);
 }
 
-/* -----------------------------------------------------
- * Workspaces 
- * ----------------------------------------------------- */
-
-#workspaces button.empty {
-    color: @surface2;
-    font-family: JetBrainsMono Nerd Font;
+/* ================================
+   LAUNCHER BUTTON
+   ================================ */
+#custom-launcher {
+  font-size: 20px; /* Increased for better click target */
+  color: #cba6f7;
+  background: rgba(49, 50, 68, 0.95);
+  padding: 0px 14px;
+  margin: 6px 0px 6px 8px; /* Balanced margin */
+  border-radius: 14px;
 }
 
+#custom-launcher:hover {
+  background: rgba(69, 71, 90, 0.95);
+  color: #fab387;
+}
+
+/* ================================
+   WORKSPACES
+   ================================ */
 #workspaces {
-    margin: 0px 1px 0px 1px;
-    padding: 0px 1px;
-    font-family: JetBrainsMono Nerd Font;
+  background: rgba(49, 50, 68, 0.95);
+  padding: 3px 8px;
+  margin: 6px 0px 6px 8px;
+  border-radius: 14px;
 }
 
 #workspaces button {
-    padding: 0px 2px;
-    margin: 4px 2px;
-    color: @yellow;
-    font-family: JetBrainsMono Nerd Font;
+  padding: 3px 9px;
+  margin: 1px 2px;
+  border-radius: 10px;
+  background: transparent;
+  color: #cdd6f4;
 }
 
-#workspaces button:hover {
-    opacity:0.5;
+#workspaces button.active {
+  background: linear-gradient(90deg, #fab387 0%, #cba6f7 100%);
+  color: #1e1e2e;
+  font-weight: 700;
 }
 
-/* ------ Pulseaudio ------ */
-#pulseaudio {
-  color: @peach;
-  background-color: @surface1;
-  padding: 2px 5px;
-  margin: 4px 2px;
+/* ================================
+   MODULE BASE STYLES
+   ================================ */
+#cpu,
+#memory,
+#temperature,
+#battery,
+#backlight,
+#pulseaudio,
+#network,
+#clock,
+#bluetooth,
+#custom-pacman-update,
+#custom-media-control {
+  padding: 4px 12px; /* Balanced vertical padding */
+  margin: 6px 0px 6px 8px; /* Balanced vertical margin */
+  font-weight: 600;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
 }
 
-/* ------ Backlight ------ */
-#backlight {
-  color: @sky;
-  background-color: @surface1;
-  padding: 2px 5px;
-  margin: 4px 2px;
+/* ================================
+   INDIVIDUAL MODULE COLORS
+   ================================ */
+#cpu {
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #f9e2af 0%, #f5c2e7 100%);
 }
-
-/* ------ Network ------ */
-#network {
-  color: @mauve;
-  background-color: @surface1;
-  padding: 2px 5px;
-  margin: 4px 2px;
+#memory {
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #b4befe 0%, #89b4fa 100%);
 }
-
-/* ------ Battery ------ */
+#temperature {
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #eba0ac 0%, #f38ba8 100%);
+}
+#custom-pacman-update {
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #8bd5ca 0%, #94e2d5 100%);
+}
 #battery {
-  color: @maroon;
-  background-color: @surface1;
-  padding: 2px 5px;
-  margin: 4px 2px;
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #a6e3a1 0%, #94e2d5 100%);
 }
-
-/* ------ Clock ------ */
+#backlight {
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #fab387 0%, #f9e2af 100%);
+}
+#pulseaudio {
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #94e2d5 0%, #89dceb 100%);
+}
+#network {
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #cba6f7 0%, #b4befe 100%);
+}
 #clock {
-  padding-left: 10px;
-  color: @text;
-  font-weight: bold;
-  font-size: 13px;
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #f5e0dc 0%, #f2cdcd 100%);
+  font-weight: 700;
+}
+#bluetooth {
+  color: #1e1e2e;
+  background: linear-gradient(135deg, #f2cdcd 0%, #f5c2e7 100%);
 }
 
-/* ------ System Tray ------ */
+/* ================================
+   SYSTEM TRAY
+   ================================ */
 #tray {
-  background-color: @surface1;
-  padding: 2px 5px;
-  margin: 4px 2px;
+  background: rgba(49, 50, 68, 0.95);
+  padding: 3px 12px;
+  margin: 6px 0px 6px 8px;
+  border-radius: 14px;
 }
 
-/* ------ Custom Modules ------ */
-#custom-icon {
-  font-size: 18px;
-  color: @blue;
-  padding-right: 5px;
+/* ================================
+   POWER MENU
+   ================================ */
+#custom-power-menu {
+  color: #f38ba8;
+  background: rgba(49, 50, 68, 0.95);
+  padding: 0px 14px;
+  margin: 6px 8px;
+  font-size: 19px;
+  border-radius: 14px;
 }
 
-#custom-separator-arrow {
-  font-size: 14px;
-  color: @text;
-}
-
-#custom-separator-dot {
-  font-size: 15px;
-  color: @text;
-}
-
-#custom-spotify {
-  color: @mauve;
-  background-color: @surface1;
-  padding: 2px 9px;
-  margin: 4px 2px;
-}
-#custom-power {
-  color: @red;
-  background-color: @surface1;
-  padding: 2px 9px;
-  margin: 4px 2px;
-  font-size: 15px;
-}
-
-#idle_inhibitor {
-  color: @green;
-  background-color: @surface1;
-  padding: 2px 9px;
-  margin: 4px 2px;
-  font-size: 15px;
-}
-
-#custom-updates {
-  padding: 2px 7px;
-  margin: 4px 2px;
-  background-color: @surface1;  
-}
-#custom-updates.green {
-  color: @text;
-}
-#custom-updates.yellow {
-  color: @peach;
-}
-#custom-updates.red {
-  color: @red;
-}
-
-#custom-notification {
-  color: @teal;
-  background-color: @surface1;
-  padding: 2px 9px;
-  margin: 4px 2px;
-  font-size: 15px;
-}
-
+/* ================================
+   TOOLTIP STYLING
+   ================================ */
 tooltip {
-    background: @base;
-    border: 1px solid @blue;
+  background: rgba(30, 30, 46, 0.98);
+  border: 1px solid #cba6f7;
+  border-radius: 14px;
+  padding: 10px;
 }
