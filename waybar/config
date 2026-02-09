@@ -1,17 +1,17 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 42,
-    "margin-top": 8,
-    "margin-left": 12,
+    "height": 51,
+    "margin-top": 4,
+    "margin-left": 7,
     "margin-bottom": 0,
     "margin-right": 12,
-    "spacing": 8,
+    "spacing": 10,
 
-    // --- Module Layout ---
     "modules-left": [
         "custom/launcher",
         "clock",
+        "custom/media"
     ],
 
     "modules-center": [
@@ -21,9 +21,10 @@
     "modules-right": [
         "backlight",
         "pulseaudio",
+        "battery",
         "bluetooth",
         "network",
-        "battery",
+        "idle_inhibitor",
         "custom/power-menu"
     ],
 
@@ -120,4 +121,26 @@
         "tooltip": false,
         "on-click": "wlogout"
     },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰅶",
+            "deactivated": "󰾪"
+        },
+        "tooltip": true,
+        "tooltip-format-activated": "Idle inhibitor active",
+        "tooltip-format-deactivated": "Idle inhibitor inactive"
+    },
+
+    "custom/media": {
+        "format": "{}",
+        "exec": "~/.config/waybar/scripts/mediaplayer.sh",
+        "return-type": "json",
+        "interval": 3,
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+        "tooltip": true,
+        "escape": true
+    }
 }
